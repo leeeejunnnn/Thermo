@@ -19,33 +19,29 @@ class data_pipeline(Dataset):
     def __init__(self, data_dir):
         self.data_dir = data_dir
         self.num_data = []
+        self.num_target = []
         self.data = []
+        self.target = []
         data_list = sorted(glob(self.data_dir + '*time*.npy'))
         target_list = sorted(glob(self.data_dir + '*ref*.npy'))
         for i in range(len(data_list)):
             data_a = np.load(data_list[i])
+            data_a = data_a.reshape(-1,1200)
             target_a = np.load(target_list[i])
-            
-            
-            
-        data_a = np.load(a[1])
-        self.num_data.append(data_a.shape[0])
-        self.data = data_a
+            target_a = target_a.reshape(-1,1)
+            self.num_data.append(data_a.shape[0])
+            self.num_target.append(target_a.shape[0])
+            self.data.append(data_a)
+            self.target.append(target_a)
+        self.data = np.vstack(self.data)
+        self.target = np.vstack(self.target)
 
     def __len__(self):
-        length = len(self.data) - self.num_dataset
-        return length
+        return (self.data.shape[0])
 
     def __getitem__(self, idx):
-        target = 0
-        x = self.data[idx:(idx + self.num_dataset),:]
-        r = np.zeros((14,14))
-        for i in range(14):
-            for j in range(14):
-                r[i,j] = np.mean(x[:,i] * x[:,j])
-        r = (r - r.min()) / (r.max()-r.min())
+        target = self.target[idx,:]
+        x = self.data[idx,:]
+        return x, target
 
-        return r, target
-
-# %%
 
