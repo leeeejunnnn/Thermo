@@ -29,10 +29,10 @@ Data_dir = '/home/sss-linux1/project/leejun/Thermo/Experiment/'
 
 # NN training parameters
 TENSORBOARD_STATE = True
-num_epoch = 300
+num_epoch = 400
 BATCH_SIZE = 64
 val_ratio = 0.3
-Learning_rate = 0.002
+Learning_rate = 0.0015
 L2_decay = 1e-8
 LRSTEP = 5
 GAMMA = 0.1
@@ -69,8 +69,8 @@ if not os.path.exists(ckpt_dir):
     os.makedirs(ckpt_dir)
 ckpt_path = '%s%s.pt' % (ckpt_dir, '/Checkpoint_exp')
 
-#%%
-'''
+
+'''#%%
 if TENSORBOARD_STATE:
     summary = SummaryWriter()
 
@@ -170,9 +170,22 @@ for epoch in range(num_epoch):
         loss.backward()
         optimizer.step()
 
-        loss_array.append(loss)
     if epoch % 10 == 0:
         print('epoch:', epoch, ' loss:', loss.item())
+        loss_array.append(loss)
+    np.save('/home/sss-linux1/project/leejun/Thermo/loss.npy',loss_array)    
+
+    
+'''
+ckpt = {'model': model.state_dict(),
+        'optimizer': optimizer.state_dict(),
+        'best_validation_acc':best_validation_acc}
+torch.save(ckpt,ckpt_path)
+print('Higher validation accuracy, Checkpoint Saved!')
+'''
+plt.plot(loss_array, label='train loss')
+plt.legend()
+plt.show()
 
 #%%
 plt.plot(loss_array)
@@ -184,6 +197,4 @@ output = output.cpu().detach().numpy()
 plt.scatter(x, y_noise, s=1, c="gray")
 plt.scatter(x, output, s=1, c="red")
 plt.show()
-'''
-
 # %%
