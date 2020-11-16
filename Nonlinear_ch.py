@@ -176,18 +176,18 @@ for epoch in range(num_epoch):
     np.save('/home/sss-linux1/project/leejun/Thermo/loss.npy',loss_array)    
 
     
-'''
 ckpt = {'model': model.state_dict(),
         'optimizer': optimizer.state_dict(),
-        'best_validation_acc':best_validation_acc}
+        }
 torch.save(ckpt,ckpt_path)
 print('Higher validation accuracy, Checkpoint Saved!')
-'''
+
 plt.plot(loss_array, label='train loss')
 plt.legend()
 plt.show()
 
 #%%
+
 plt.plot(loss_array)
 plt.show()
 plt.figure(figsize=(10,10))
@@ -197,4 +197,6 @@ output = output.cpu().detach().numpy()
 plt.scatter(x, y_noise, s=1, c="gray")
 plt.scatter(x, output, s=1, c="red")
 plt.show()
-# %%
+# %% Validataion
+
+
