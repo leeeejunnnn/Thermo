@@ -32,7 +32,7 @@ TENSORBOARD_STATE = True
 num_epoch = 400
 BATCH_SIZE = 64
 val_ratio = 0.3
-Learning_rate = 0.0015
+Learning_rate = 0.001
 L2_decay = 1e-8
 LRSTEP = 5
 GAMMA = 0.1
@@ -41,18 +41,23 @@ GAMMA = 0.1
 dataset = data_pipeline(Data_dir)
 train_dataset, val_dataset = torch.utils.data.random_split(dataset, (320000, 12800) )
 train_loader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=0)
-val_loader = DataLoader(val_dataset, batch_size=BATCH_SIZE*2, shuffle=False, num_workers=0)
+val_loader = DataLoader(val_dataset, shuffle=False, num_workers=0)
 #%% Model
 model = nn.Sequential(
     nn.Linear(1200,600),
+    nn.BatchNorm1d(600),
     nn.LeakyReLU(0.2),
     nn.Linear(600,200),
+    nn.BatchNorm1d(200),
     nn.LeakyReLU(0.2),
     nn.Linear(200,100),
+    nn.BatchNorm1d(100),
     nn.LeakyReLU(0.2),    
     nn.Linear(100,50),
+    nn.BatchNorm1d(50),
     nn.LeakyReLU(0.2),        
     nn.Linear(50,25),
+    nn.BatchNorm1d(25),
     nn.LeakyReLU(0.2),          
     nn.Linear(25,1),
 )
@@ -174,7 +179,8 @@ for epoch in range(num_epoch):
         print('epoch:', epoch, ' loss:', loss.item())
         loss_array.append(loss)
     np.save('/home/sss-linux1/project/leejun/Thermo/loss.npy',loss_array)    
-
+    
+    scheduler.step()
     
 ckpt = {'model': model.state_dict(),
         'optimizer': optimizer.state_dict(),
@@ -194,9 +200,37 @@ plt.figure(figsize=(10,10))
 x = x.cpu().detach().numpy()
 y_noise = y_noise.cpu().detach().numpy()
 output = output.cpu().detach().numpy()
-plt.scatter(x, y_noise, s=1, c="gray")
+plt.scatter(x, y_noise, s=1, c="gr  ay")
 plt.scatter(x, output, s=1, c="red")
 plt.show()
 # %% Validataion
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+model = model.to(device)
+ckept_load = torch.load('Checkpoint/Checkpoint_exp_400_0015.pt', map_location=device)
+model.load_state_dict(ckept_load['model'])
+loss_func = nn.L1Loss().to(device)
+#%%
+output_array = []
+loss_array = []
+target_array = []
+for x, target in val_loader:
+    x = x.to(device, dtype=torch.float)
+    target = target.to(device)
+    target_array.append(target.cpu().data.numpy())
+    output = model(x)
 
-
+    loss = output-target
+    output_array.append(output.cpu().data.numpy())
+    loss_array.append(loss.cpu().data.numpy())
+#%%
+output_array = np.vstack(output_array)
+loss_array = np.vstack(loss_array)
+target_array = np.vstack(target_array)
+plt.scatter(output_array, target_array)
+plt.show()
+plt.plot(loss_array)
+plt.show()
+plt.plot(sorted(loss_array))
+plt.show()
+print(np.mean(abs(loss_array)))
+# %%
