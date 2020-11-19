@@ -206,7 +206,7 @@ plt.show()
 # %% Validataion
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 model = model.to(device)
-ckept_load = torch.load('Checkpoint/Checkpoint_exp_400_0015.pt', map_location=device)
+ckept_load = torch.load('Checkpoint/Checkpoint_exp_400_001_bn.pt', map_location=device)
 model.load_state_dict(ckept_load['model'])
 loss_func = nn.L1Loss().to(device)
 #%%

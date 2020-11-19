@@ -1,0 +1,55 @@
+Available devices  2
+Current cuda device  0
+TITAN RTX
+epoch: 0  loss: 19.445399398669927
+/home/sss-linux1/anaconda3/lib/python3.7/site-packages/torch/storage.py:34: FutureWarning: pickle support for Storage will be removed in 1.5. Use `torch.save` instead
+  warnings.warn("pickle support for Storage will be removed in 1.5. Use `torch.save` instead", FutureWarning)
+epoch: 10  loss: 12.819165056061705
+Available devices  2
+Current cuda device  0
+TITAN RTX
+epoch: 0  loss: 22.184888595849124
+epoch: 10  loss: 35.51865681247827
+epoch: 20  loss: 7.973272681979171
+epoch: 30  loss: 8.910466123487097
+epoch: 40  loss: 7.536223597511082
+epoch: 50  loss: 11.365008797773363
+epoch: 60  loss: 13.695774025154083
+epoch: 70  loss: 12.50713026144469
+epoch: 80  loss: 10.356803568084999
+epoch: 90  loss: 9.248438768526883
+epoch: 100  loss: 7.995672014570572
+epoch: 110  loss: 10.504419709087532
+epoch: 120  loss: 21.737431367891194
+epoch: 130  loss: 7.889982775617124
+epoch: 140  loss: 8.53293983808363
+epoch: 150  loss: 10.349239855756554
+epoch: 160  loss: 17.603312442283695
+epoch: 170  loss: 11.013498285728032
+epoch: 180  loss: 9.635625668643927
+epoch: 190  loss: 9.423514230355252
+epoch: 200  loss: 11.084122105464193
+epoch: 210  loss: 29.323769187629964
+epoch: 220  loss: 10.355064264115807
+epoch: 230  loss: 12.161410819914853
+epoch: 240  loss: 10.177566186349221
+epoch: 250  loss: 21.08654484574485
+epoch: 260  loss: 11.709253214695138
+epoch: 270  loss: 24.605458825713995
+epoch: 280  loss: 10.962297750509737
+epoch: 290  loss: 10.954747212410346
+epoch: 300  loss: 10.35939177884315
+epoch: 310  loss: 9.27865183747525
+epoch: 320  loss: 8.86735044676341
+epoch: 330  loss: 23.273584699749673
+epoch: 340  loss: 11.382640420667071
+epoch: 350  loss: 11.232962204126617
+epoch: 360  loss: 9.832397579871113
+epoch: 370  loss: 11.346167052102103
+epoch: 380  loss: 9.41076868731664
+epoch: 390  loss: 12.999592828586568
+Higher validation accuracy, Checkpoint Saved!
+Traceback (most recent call last):
+  File "Nonlinear_ch.py", line 201, in <module>
+    y_noise = y_noise.cpu().detach().numpy()
+NameError: name 'y_noise' is not defined
