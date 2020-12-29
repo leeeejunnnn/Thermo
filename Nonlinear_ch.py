@@ -8,7 +8,6 @@ from torch.utils.data import DataLoader
 from torch.autograd import Variable
 from torch.utils.tensorboard import SummaryWriter
 
-import matplotlib.pyplot as plt
 import os
 from glob import glob
 import time
@@ -64,8 +63,8 @@ model_bn = nn.Sequential(
 
 #%% Model
 model = nn.Sequential(
-    nn.Linear(1200,600),
-    nn.LeakyReLU(0.2),
+#    nn.Linear(1200,600),
+#    nn.LeakyReLU(0.2),
     nn.Linear(600,200),
     nn.LeakyReLU(0.2),
     nn.Linear(200,100),

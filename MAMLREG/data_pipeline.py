@@ -22,12 +22,12 @@ class data_pipeline(Dataset):
         self.num_target = []
         self.data = []
         self.target = []
-        data_list = sorted(glob(self.data_dir + '*time*_1.npy'))
+        data_list = sorted(glob(self.data_dir + '*time*.npy'))
         target_list = sorted(glob(self.data_dir + '*ref*.npy'))
         for i in range(len(data_list)):
-            data_a = np.load(data_list[i], allow_pickle=True)
-            data_a = data_a.reshape(-1,600)
-            target_a = np.load(target_list[i], allow_pickle=True)
+            data_a = np.load(data_list[i])
+            data_a = data_a.reshape(-1,1200)
+            target_a = np.load(target_list[i])
             target_a = target_a.reshape(-1,1)
             self.num_data.append(data_a.shape[0])
             self.num_target.append(target_a.shape[0])

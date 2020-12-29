@@ -7,45 +7,45 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 #%%raw data
-filepath = 'Experiment/20190225_drycoating/image_raw_sp25_thk100_registered.mat'
+filepath = '/home/sss-linux1/project/leejun/Thermo/Experiment/20190225_drycoating/image_raw_sp25_thk100_registered_1.mat'
 matfile = io.loadmat(filepath)
-image_timeser_100um = np.array(matfile['image_raw_registered'])
-np.save('image_time_0225_100um', arr=image_timeser_100um)
+image_timeser_100um = np.array(matfile['image_raw_registered1'])
+np.save('image_time_0225_100um_1', arr=image_timeser_100um)
 
-filepath = 'Experiment/20190225_drycoating/image_raw_sp25_thk200_registered.mat'
+filepath = 'Experiment/20190225_drycoating/image_raw_sp25_thk200_registered_1.mat'
 matfile = io.loadmat(filepath)
-image_timeser_200um = np.array(matfile['image_raw_registered'])
-np.save('image_time_0225_200um', arr=image_timeser_200um)
+image_timeser_200um = np.array(matfile['image_raw_registered1'])
+np.save('image_time_0225_200um_1', arr=image_timeser_200um)
 
-filepath = 'Experiment/20190225_drycoating/image_raw_sp25_thk300_registered.mat'
+filepath = 'Experiment/20190225_drycoating/image_raw_sp25_thk300_registered_1.mat'
 matfile = io.loadmat(filepath)
-image_timeser_300um = np.array(matfile['image_raw_registered'])
-np.save('image_time_0225_300um', arr=image_timeser_300um)
+image_timeser_300um = np.array(matfile['image_raw_registered1'])
+np.save('image_time_0225_300um_1', arr=image_timeser_300um)
 
-filepath = 'Experiment/20190225_drycoating/image_raw_sp25_thk400_registered.mat'
+filepath = 'Experiment/20190225_drycoating/image_raw_sp25_thk400_registered_1.mat'
 matfile = io.loadmat(filepath)
-image_timeser_400um = np.array(matfile['image_raw_registered'])
-np.save('image_time_0225_400um', arr=image_timeser_400um)
+image_timeser_400um = np.array(matfile['image_raw_registered1'])
+np.save('image_time_0225_400um_1', arr=image_timeser_400um)
 
-filepath = 'Experiment/20190225_drycoating/image_raw_sp25_thk500_registered.mat'
+filepath = 'Experiment/20190225_drycoating/image_raw_sp25_thk500_registered_1.mat'
 matfile = io.loadmat(filepath)
-image_timeser_500um = np.array(matfile['image_raw_registered'])
-np.save('image_time_0225_500um', arr=image_timeser_500um)
+image_timeser_500um = np.array(matfile['image_raw_registered1'])
+np.save('image_time_0225_500um_1', arr=image_timeser_500um)
 
-filepath = 'Experiment/20190225_drycoating/image_raw_sp25_thk600_registered.mat'
+filepath = 'Experiment/20190225_drycoating/image_raw_sp25_thk600_registered_1.mat'
 matfile = io.loadmat(filepath)
-image_timeser_600um = np.array(matfile['image_raw_registered'])
-np.save('image_time_0225_600um', arr=image_timeser_600um)
+image_timeser_600um = np.array(matfile['image_raw_registered1'])
+np.save('image_time_0225_600um_1', arr=image_timeser_600um)
 
-filepath = 'Experiment/20190225_drycoating/image_raw_sp25_thk700_registered.mat'
+filepath = 'Experiment/20190225_drycoating/image_raw_sp25_thk700_registered_1.mat'
 matfile = io.loadmat(filepath)
-image_timeser_700um = np.array(matfile['image_raw_registered'])
-np.save('image_time_0225_700um', arr=image_timeser_700um)
+image_timeser_700um = np.array(matfile['image_raw_registered1'])
+np.save('image_time_0225_700um_1', arr=image_timeser_700um)
 
-filepath = 'Experiment/20190225_drycoating/image_raw_sp25_thk800_registered.mat'
+filepath = 'Experiment/20190225_drycoating/image_raw_sp25_thk800_registered_1.mat'
 matfile = io.loadmat(filepath)
-image_timeser_800um = np.array(matfile['image_raw_registered'])
-np.save('image_time_0225_800um', arr=image_timeser_800um)
+image_timeser_800um = np.array(matfile['image_raw_registered1'])
+np.save('image_time_0225_800um_1', arr=image_timeser_800um)
 
 #%%refference
 filepath = 'Experiment/reference/New/image_ref_sp25_thk100_registered.mat'

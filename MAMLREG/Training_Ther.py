@@ -1,11 +1,27 @@
 #%%
 import torch
 import torch.nn as nn
-import numpy as np
+import torch.nn.functional as F
+import torch.optim as optim
+import torch.nn.init as init
+from torch.utils.data import DataLoader
+from torch.autograd import Variable
+from torch.utils.tensorboard import SummaryWriter
 from collections import OrderedDict
-from src.tasks import Sine_Task, Sine_Task_Distribution
 
+import os
+from glob import glob
+import time
+import numpy as np
 import matplotlib.pyplot as plt
+from data_pipeline import data_pipeline
+
+#%%
+# device GPU / CPU
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+print ('Available devices ', torch.cuda.device_count())
+print ('Current cuda device ', torch.cuda.current_device())
+print(torch.cuda.get_device_name(device))
 
 # %%
 class MAMLModel(nn.Module):
@@ -94,7 +110,8 @@ class MAML():
             # compute meta loss
             meta_loss = 0
             for i in range(self.tasks_per_meta_batch):
-                task = self.tasks.sample_task()
+                #task = self.tasks.sample_task()
+                #meta_loss += self.inner_loop(task)
                 meta_loss += self.inner_loop()
             
             # compute meta gradient of loss with respect to maml weights
@@ -134,12 +151,19 @@ def loss_on_random_task(initial_model, K, num_steps, optim=torch.optim.SGD):
     
     # copy MAML model into a new object to preserve MAML weights during training
     model = nn.Sequential(OrderedDict([
-        ('l1', nn.Linear(1,40)),
+        ('l1', nn.Linear(1200,600)),
         ('relu1', nn.ReLU()),
-        ('l2', nn.Linear(40,40)),
+        ('l2', nn.Linear(600,200)),
         ('relu2', nn.ReLU()),
-        ('l3', nn.Linear(40,1))
+        ('l3', nn.Linear(200,100)),
+        ('relu3', nn.ReLU()),
+        ('l4', nn.Linear(100,50)),
+        ('relu4', nn.ReLU()),
+        ('l5', nn.Linear(50,25)),
+        ('relu5', nn.ReLU()),
+        ('l6', nn.Linear(25,1))
     ]))
+    
     model.load_state_dict(initial_model.state_dict())
     criterion = nn.MSELoss()
     optimiser = optim(model.parameters(), 0.01)
@@ -183,12 +207,18 @@ def mixed_pretrained(iterations=500):
     
     # set up model
     model = nn.Sequential(OrderedDict([
-            ('l1', nn.Linear(1,40)),
-            ('relu1', nn.ReLU()),
-            ('l2', nn.Linear(40,40)),
-            ('relu2', nn.ReLU()),
-            ('l3', nn.Linear(40,1))
-        ]))
+        ('l1', nn.Linear(1200,600)),
+        ('relu1', nn.ReLU()),
+        ('l2', nn.Linear(600,200)),
+        ('relu2', nn.ReLU()),
+        ('l3', nn.Linear(200,100)),
+        ('relu3', nn.ReLU()),
+        ('l4', nn.Linear(100,50)),
+        ('relu4', nn.ReLU()),
+        ('l5', nn.Linear(50,25)),
+        ('relu5', nn.ReLU()),
+        ('l6', nn.Linear(25,1))
+    ]))
     optimiser = torch.optim.Adam(model.parameters(), lr=0.01)
     criterion = nn.MSELoss()
     
@@ -231,11 +261,17 @@ def model_functions_at_training(initial_model, X, y, sampled_steps, x_axis, opti
     
     # copy MAML model into a new object to preserve MAML weights during training
     model = nn.Sequential(OrderedDict([
-        ('l1', nn.Linear(1,40)),
+        ('l1', nn.Linear(1200,600)),
         ('relu1', nn.ReLU()),
-        ('l2', nn.Linear(40,40)),
+        ('l2', nn.Linear(600,200)),
         ('relu2', nn.ReLU()),
-        ('l3', nn.Linear(40,1))
+        ('l3', nn.Linear(200,100)),
+        ('relu3', nn.ReLU()),
+        ('l4', nn.Linear(100,50)),
+        ('relu4', nn.ReLU()),
+        ('l5', nn.Linear(50,25)),
+        ('relu5', nn.ReLU()),
+        ('l6', nn.Linear(25,1))
     ]))
     model.load_state_dict(initial_model.state_dict())
     criterion = nn.MSELoss()
