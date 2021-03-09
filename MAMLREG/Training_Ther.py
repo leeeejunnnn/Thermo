@@ -23,6 +23,41 @@ print ('Available devices ', torch.cuda.device_count())
 print ('Current cuda device ', torch.cuda.current_device())
 print(torch.cuda.get_device_name(device))
 
+#%%
+class MAML_coat(nn.Module):
+    def __init__(self):
+        super(MAML_coat, self).__init__()
+        self.model = nn.Sequential(OrderedDict([
+            ('l1', nn.Linear(600,300)),
+            ('relu1', nn.ReLU()),
+            ('l2', nn.Linear(300,1500)),
+            ('relu2', nn.ReLU()),
+            ('l3', nn.Linear(150,70)),
+            ('relu3', nn.ReLU()),
+            ('l4', nn.Linear(70,20),
+            ('relu4', nn.ReLU()),
+            ('l5', nn.Linear(20,1))
+        ]))
+        
+    def forward(self, x):
+        return self.model(x)
+
+    def parameterised(self, x, weights):
+        # like forward, but uses ``weights`` instead of ``model.parameters()``
+        # it'd be nice if this could be generated automatically for any nn.Module...
+        x = nn.functional.linear(x, weights[0], weights[1])
+        x = nn.functional.relu(x)
+        x = nn.functional.linear(x, weights[2], weights[3])
+        x = nn.functional.relu(x)
+        x = nn.functional.linear(x, weights[4], weights[5])
+        x = nn.functional.relu(x)
+        x = nn.functional.linear(x, weights[6], weights[7])
+        x = nn.functional.relu(x)
+        x = nn.functional.linear(x, weights[8], weights[9])
+        return x
+                 
+
+
 # %%
 class MAMLModel(nn.Module):
     def __init__(self):
