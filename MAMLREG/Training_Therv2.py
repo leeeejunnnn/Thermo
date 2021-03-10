@@ -281,7 +281,7 @@ def model_functions_at_training(initial_model, X, y, sampled_steps, x_axis, opti
     # copy MAML model into a new object to preserve MAML weights during training
     model = nn.Sequential(OrderedDict([
             ('l1', nn.Linear(600,300)),
-            ('relu1', nn.ReLU()),
+            ('relu1', nn.ReLU()), 
             ('l2', nn.Linear(300,150)),
             ('relu2', nn.ReLU()),
             ('l3', nn.Linear(150,70)),
