@@ -28,7 +28,7 @@ Data_dir = '/home/sss-linux1/project/leejun/Thermo/Experiment/'
 
 # NN training parameters
 TENSORBOARD_STATE = True
-num_epoch = 100
+num_epoch = 2048
 BATCH_SIZE = 64
 val_ratio = 0.3
 Learning_rate = 0.001
@@ -239,6 +239,8 @@ for x, target in val_loader:
     loss = output-target
     output_array.append(output.cpu().data.numpy())
     loss_array.append(loss.cpu().data.numpy())
+
+
 #%%
 output_array = np.vstack(output_array)
 loss_array = np.vstack(loss_array)

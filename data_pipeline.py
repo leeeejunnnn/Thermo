@@ -29,6 +29,7 @@ class data_pipeline(Dataset):
             data_a = data_a.reshape(-1,600)
             target_a = np.load(target_list[i], allow_pickle=True)
             target_a = target_a.reshape(-1,1)
+            print(np.mean(target_a))
             self.num_data.append(data_a.shape[0])
             self.num_target.append(target_a.shape[0])
             self.data.append(data_a)
