@@ -169,7 +169,7 @@ class MAML():
 
 
 #%%
-tasks = Task_pipe('../Experiment/')
+tasks = Task_pipe('../Experiment/190225_drycoating_npy/')
 maml = MAML(MAML_coat(), tasks, inner_lr=0.01, meta_lr=0.001)
 # %%
 maml.main_loop(num_iterations=1000)
@@ -355,4 +355,6 @@ K = 10
 X, y = tasks.sample_data(K)
 
 plot_sampled_performance(maml.model.model, 'MAML', X, y)
+# %%
+
 # %%
